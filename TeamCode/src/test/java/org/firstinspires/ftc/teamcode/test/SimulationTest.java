@@ -50,7 +50,7 @@ class SimulationTest {
     void PD() throws InterruptedException {
         this.runSimulationTwice((currentPos, currentVel, targetPos) -> {
             double error = targetPos - currentPos;
-            return error * 0.5 - currentVel * 0.1;
+            return error * 0.5 - currentVel * 0.09;
         });
     }
 
