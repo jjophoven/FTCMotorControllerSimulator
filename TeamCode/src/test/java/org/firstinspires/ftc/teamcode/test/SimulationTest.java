@@ -96,8 +96,8 @@ class SimulationTest {
             double error = targetPos - currentPos;
             double targetVel = sim.maxVelocityToStopWithinDistance(error, -0.2);
 
-            Logger.recordOutput("sim/error", error);
-            Logger.recordOutput("sim/targetVel", targetVel);
+            Logger.recordOutput("sim/error inches", error);
+            Logger.recordOutput("sim/targetVel inches per second", targetVel);
 
             return (targetVel - currentVel) * 0.025 + (targetVel) * 0.0125 - 0.2 * Math.signum(currentVel);
         });
@@ -110,9 +110,9 @@ class SimulationTest {
             double targetVel = sim.maxVelocityToStopWithinDistance(error, -0.2);
             double excessVelocityAfterBraking = sim.excessVelocityAfterBraking(error, currentVel, -0.2);
 
-            Logger.recordOutput("sim/error", error);
-            Logger.recordOutput("sim/targetVel", targetVel);
-            Logger.recordOutput("sim/excessVelocityAfterBraking", excessVelocityAfterBraking);
+            Logger.recordOutput("sim/error inches", error);
+            Logger.recordOutput("sim/targetVel inches per second", targetVel);
+            Logger.recordOutput("sim/excessVelocityAfterBraking inches per second", excessVelocityAfterBraking);
 
             return (targetVel - excessVelocityAfterBraking) * 0.0125 + (targetVel - currentVel) * 0.025 - 0.2 * Math.signum(currentVel);
         });
@@ -127,9 +127,9 @@ class SimulationTest {
             double targetVel = sim.maxVelocityToStopWithinDistance(error, -0.2);
             double excessVelocityAfterBraking = sim.excessVelocityAfterBraking(error, currentVel, -0.2);
 
-            Logger.recordOutput("sim/error", error);
-            Logger.recordOutput("sim/targetVel", targetVel);
-            Logger.recordOutput("sim/excessVelocityAfterBraking", excessVelocityAfterBraking);
+            Logger.recordOutput("sim/error inches", error);
+            Logger.recordOutput("sim/targetVel inches per second", targetVel);
+            Logger.recordOutput("sim/excessVelocityAfterBraking inches per second", excessVelocityAfterBraking);
 
             return (targetVel - excessVelocityAfterBraking) * 0.0125 + (targetVel - currentVel - excessVelocityAfterBraking) * 0.025 - 0.2 * Math.signum(currentVel);
         });
@@ -142,12 +142,12 @@ class SimulationTest {
             double error = targetPos - currentPos;
             double targetVel = sim.maxVelocityToStopWithinDistance(error, -0.2);
 
-            Logger.recordOutput("sim/error", error);
-            Logger.recordOutput("sim/targetVel", targetVel);
+            Logger.recordOutput("sim/error inches", error);
+            Logger.recordOutput("sim/targetVel inches per second", targetVel);
 
             double discrim = currentVel * currentVel - 2 * Math.abs(error) * sim.zeroPowerAcceleration;
             double finalCoastVel = Math.signum(error) * Math.sqrt(Math.max(0, discrim));
-            Logger.recordOutput("sim/finalCoastVel", finalCoastVel);
+            Logger.recordOutput("sim/finalCoastVel inches per second", finalCoastVel);
 
             if (Math.signum(finalCoastVel) != Math.signum(currentVel)) {
                 finalCoastVel = 0;
@@ -163,11 +163,11 @@ class SimulationTest {
             double error = targetPos - currentPos;
             double targetVel = Math.min(40, sim.maxVelocityToStopWithinDistance(error, -0.2));
 
-            Logger.recordOutput("sim/error", error);
-            Logger.recordOutput("sim/targetVel", targetVel);
+            Logger.recordOutput("sim/error inches", error);
+            Logger.recordOutput("sim/targetVel inches per second", targetVel);
 
             double excessBrake = sim.excessVelocityAfterBraking(error, currentVel, -0.2);
-            Logger.recordOutput("sim/excessBrake", excessBrake);
+            Logger.recordOutput("sim/excessBrake inches per second", excessBrake);
             double output = (targetVel - currentVel - excessBrake) * 0.025 + (targetVel - excessBrake) * 0.0125;
             if (excessBrake > 0) {
                 output -= 0.2 * Math.signum(currentVel);
@@ -204,9 +204,9 @@ class SimulationTest {
             double error = targetPos - sim.getPosition();
             double targetVel = sim.maxVelocityToStopWithinDistance(error, -0.2);
 
-            Logger.recordOutput("sim/error", error);
-            Logger.recordOutput("sim/targetVel", targetVel);
-            Logger.recordOutput("test/targetPos", targetPos);
+            Logger.recordOutput("sim/error inches", error);
+            Logger.recordOutput("sim/targetVel inches per sec", targetVel);
+            Logger.recordOutput("test/targetPos inches", targetPos); // IDK UNITS
 
             Logger.periodicAfterUser(0, 0);
         } while (!(Math.abs(targetPos - sim.getPosition()) < 0.5) || !(Math.abs(sim.getSpeed()) < 0.1));

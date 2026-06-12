@@ -192,13 +192,13 @@ public class MecanumDecelTest extends LinearOpMode {
                                  double velMps, double accelMps2,
                                  double voltage, double loopDtMs) {
         telemetry.addData("Mode",          activeMode);
-        telemetry.addData("X (in)",        String.format("%.2f", pose.getX(DistanceUnit.INCH)));
-        telemetry.addData("Y (in)",        String.format("%.2f", pose.getY(DistanceUnit.INCH)));
-        telemetry.addData("Heading °",     String.format("%.2f", Math.toDegrees(headingRad)));
-        telemetry.addData("Velocity in/s",  String.format("%.4f", velMps));
-        telemetry.addData("Accel in/s²",    String.format("%.4f", accelMps2));
-        telemetry.addData("Voltage V",     String.format("%.3f", voltage));
-        telemetry.addData("Loop ms",       String.format("%.1f", loopDtMs));
+        telemetry.addData("X inches",        pose.getX(DistanceUnit.INCH));
+        telemetry.addData("Y inches",        pose.getY(DistanceUnit.INCH));
+        telemetry.addData("Heading deg",     Math.toDegrees(headingRad));
+        telemetry.addData("Velocity in s",  velMps);
+        telemetry.addData("Accel inches s2",    accelMps2);
+        telemetry.addData("Voltage volts",     voltage);
+        telemetry.addData("Loop milliseconds",       loopDtMs);
         telemetry.update();
     }
 }
