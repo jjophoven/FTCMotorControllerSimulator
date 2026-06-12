@@ -34,7 +34,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 @Config
 @TeleOp(name = "Mecanum Decel Test")
 public class MecanumDecelTest extends LinearOpMode {
-
     public static double DRIVE_SPEED = 1.0;
 
     private DcMotorEx fl, fr, bl, br;
@@ -45,7 +44,7 @@ public class MecanumDecelTest extends LinearOpMode {
     private double driveFx = 0, driveFy = 0;
     private boolean driving = false;
 
-    private String activeMode = "IDLE";
+    private double dutyCycle = 0.0;
 
     private final ElapsedTime loopTimer = new ElapsedTime();
 
@@ -112,19 +111,23 @@ public class MecanumDecelTest extends LinearOpMode {
             }
 
             if (gamepad1.aWasPressed()) {
-                applyStop(0.0, DcMotor.ZeroPowerBehavior.FLOAT);
+                dutyCycle = 0;
+                applyStop(DcMotor.ZeroPowerBehavior.FLOAT);
                 activeMode = "COAST  (A)";
                 driving = false;
             } else if (gamepad1.dpadDownWasPressed()) {
-                applyStop(0.0, DcMotor.ZeroPowerBehavior.BRAKE);
+                dutyCycle = 0;
+                applyStop(DcMotor.ZeroPowerBehavior.BRAKE);
                 activeMode = "BRAKE  (Dpad↓)";
                 driving = false;
             } else if (gamepad1.leftBumperWasPressed()) {
-                applyStop(-0.0001, DcMotor.ZeroPowerBehavior.FLOAT);
+                dutyCycle = -0.0001;
+                applyStop(DcMotor.ZeroPowerBehavior.FLOAT);
                 activeMode = "NEG TINY  (LB)";
                 driving = false;
             } else if (gamepad1.rightBumperWasPressed()) {
-                applyStop(-0.2, DcMotor.ZeroPowerBehavior.FLOAT);
+                dutyCycle = -0.2;
+                applyStop(DcMotor.ZeroPowerBehavior.FLOAT);
                 activeMode = "NEG LOW   (RB)";
                 driving = false;
             }
@@ -159,12 +162,12 @@ public class MecanumDecelTest extends LinearOpMode {
         br.setPower(brP / max * DRIVE_SPEED);
     }
 
-    private void applyStop(double power, DcMotor.ZeroPowerBehavior zpb) {
+    private void applyStop(DcMotor.ZeroPowerBehavior zpb) {
         setAllZPB(zpb);
-        fl.setPower(power);
-        fr.setPower(power);
-        bl.setPower(power);
-        br.setPower(power);
+        fl.setPower(dutyCycle);
+        fr.setPower(dutyCycle);
+        bl.setPower(dutyCycle);
+        br.setPower(dutyCycle);
     }
 
     private void setAllZPB(DcMotor.ZeroPowerBehavior zpb) {
@@ -191,13 +194,14 @@ public class MecanumDecelTest extends LinearOpMode {
     private void updateTelemetry(Pose2D pose, double headingRad,
                                  double velMps, double accelMps2,
                                  double voltage, double loopDtMs) {
-        telemetry.addData("Mode",          activeMode);
+        telemetry.addData("Applied volts", voltage * dutyCycle);
+        telemetry.addData("duty cycle",      dutyCycle);
         telemetry.addData("X inches",        pose.getX(DistanceUnit.INCH));
         telemetry.addData("Y inches",        pose.getY(DistanceUnit.INCH));
         telemetry.addData("Heading deg",     Math.toDegrees(headingRad));
         telemetry.addData("Velocity in s",  velMps);
         telemetry.addData("Accel inches s2",    accelMps2);
-        telemetry.addData("Voltage volts",     voltage);
+        telemetry.addData("Battery volts",     voltage);
         telemetry.addData("Loop milliseconds",       loopDtMs);
         telemetry.update();
     }

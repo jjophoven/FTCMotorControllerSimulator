@@ -206,7 +206,7 @@ class SimulationTest {
 
             Logger.recordOutput("sim/error inches", error);
             Logger.recordOutput("sim/targetVel inches per second", targetVel);
-            Logger.recordOutput("test/targetPos inches", targetPos); // IDK UNITS
+            Logger.recordOutput("test/targetPos inches", targetPos);
 
             Logger.periodicAfterUser(0, 0);
         } while (!(Math.abs(targetPos - sim.getPosition()) < 0.5) || !(Math.abs(sim.getSpeed()) < 0.1));
