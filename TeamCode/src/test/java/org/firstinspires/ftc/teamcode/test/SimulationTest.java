@@ -28,7 +28,7 @@ class SimulationTest {
         Logger.end();
     }
 
-    //@Test
+    @Test
     void bangBang() throws InterruptedException {
         this.runSimulationTwice((currentPos, currentVel, targetPos) -> sim.bangBang(currentVel, targetPos - currentPos));
     }
