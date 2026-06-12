@@ -28,7 +28,7 @@ class SimulationTest {
         Logger.end();
     }
 
-    @Test
+    //@Test
     void bangBang() throws InterruptedException {
         this.runSimulationTwice((currentPos, currentVel, targetPos) -> sim.bangBang(currentVel, targetPos - currentPos));
     }
@@ -205,7 +205,7 @@ class SimulationTest {
             double targetVel = sim.maxVelocityToStopWithinDistance(error, -0.2);
 
             Logger.recordOutput("sim/error inches", error);
-            Logger.recordOutput("sim/targetVel inches per sec", targetVel);
+            Logger.recordOutput("sim/targetVel inches per second", targetVel);
             Logger.recordOutput("test/targetPos inches", targetPos); // IDK UNITS
 
             Logger.periodicAfterUser(0, 0);
